@@ -44,6 +44,7 @@ private:
 	/********************************/
 	/*  User Functions              */
 	/********************************/
+	void SweepForDeadBodies();
 private:
 	MainWindow& wnd;
 	Graphics gfx;

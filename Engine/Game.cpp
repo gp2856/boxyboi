@@ -58,6 +58,10 @@ Game::Game( MainWindow& wnd )
 				auto& tid1 = typeid(boxPtrs[1]->GetColorTrait());
 
 				std::stringstream msg;
+				for (auto &box : boxPtrs)
+				{
+					box->MarkForDelete();
+				}
 				msg << "Collision between " << tid0.name() << " and " << tid1.name() << std::endl;
 				OutputDebugStringA( msg.str().c_str() );
 			}
@@ -79,6 +83,13 @@ void Game::UpdateModel()
 {
 	const float dt = ft.Mark();
 	world.Step( dt,8,3 );
+	SweepForDeadBodies();
+}
+
+void Game::SweepForDeadBodies()
+{
+	auto newEnd = std::remove_if(boxPtrs.begin(), boxPtrs.end(), std::mem_fn(&Box::IsMarkedForDelete));
+	boxPtrs.erase(newEnd, boxPtrs.end());
 }
 
 void Game::ComposeFrame()

@@ -91,6 +91,14 @@ public:
 	{
 		return *pColorTrait;
 	}
+	bool IsMarkedForDelete() const
+	{
+		return markedForRemoval;
+	}
+	void MarkForDelete()
+	{
+		markedForRemoval = true;
+	}
 private:
 	static void Init()
 	{
@@ -103,6 +111,7 @@ private:
 private:
 	static IndexedTriangleList<Vec2> model;
 	float size;
+	bool markedForRemoval = false;
 	BodyPtr pBody;
 	std::unique_ptr<ColorTrait> pColorTrait;
 };
